@@ -5,3 +5,7 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+all:
+  path: /api
+  controller: App\Controller\ApiController::fetchAll

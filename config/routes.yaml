@@ -5,3 +5,8 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+api_post_usuarios:
+  path: /api/usuarios/
+  controller: App\Controller\ApiController::postCybedUser
+  methods: ["POST"]

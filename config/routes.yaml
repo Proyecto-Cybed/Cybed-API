@@ -1,11 +1,17 @@
 controllers:
-    resource: ../src/Controller/
-    type: annotation
+  resource: ../src/Controller/
+  type: annotation
 
 kernel:
-    resource: ../src/Kernel.php
-    type: annotation
+  resource: ../src/Kernel.php
+  type: annotation
 
-all:
+getAll:
   path: /api
-  controller: App\Controller\ApiController::fetchAll
+  controller: App\Controller\ApiController::getAll
+  methods: ["GET"]
+
+getById:
+  path: /api/{id}
+  controller: App\Controller\ApiController::getById
+  methods: ["GET"]

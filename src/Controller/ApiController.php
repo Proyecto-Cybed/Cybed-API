@@ -32,20 +32,7 @@ class ApiController extends AbstractController{
         return new JsonResponse($result, 201);
     }
 
-    function postCybedLogin(ManagerRegistry $doctrine , Request $request) {
-        $entityManager = $doctrine->getManager();
-
-        $user =  $entityManager->getRepository(Usuarios::class)->findBy(['usuario' => $request->request->get("usuario")]);
-        if ($user) {
-            return new JsonResponse([
-                'ok' => 'ok'
-            ], 201);
-            }
-        
-        $result = "prueba";
-       
-        return new JsonResponse($result, 201);
-    }
+   
     
 
     

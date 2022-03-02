@@ -3,9 +3,9 @@ controllers:
   type: annotation
 
 kernel:
-  resource: ../src/Kernel.php
-  type: annotation
-
+    resource: ../src/Kernel.php
+    type: annotation
+    
 getAll:
   path: /api
   controller: App\Controller\ApiController::getAll
@@ -15,3 +15,8 @@ getById:
   path: /api/{id}
   controller: App\Controller\ApiController::getById
   methods: ["GET"]
+
+api_post_usuarios:
+  path: /api/usuarios/
+  controller: App\Controller\UserController::postCybedUser
+  methods: ["POST"]

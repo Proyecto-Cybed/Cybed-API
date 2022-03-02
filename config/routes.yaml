@@ -7,13 +7,13 @@ kernel:
     type: annotation
     
 getAll:
-  path: /api
-  controller: App\Controller\ApiController::getAll
+  path: /nvd-api
+  controller: App\Controller\ExternalApiController::getAll
   methods: ["GET"]
 
 getById:
-  path: /api/{id}
-  controller: App\Controller\ApiController::getById
+  path: /nvd-api/{id}
+  controller: App\Controller\ExternalApiController::getById
   methods: ["GET"]
 
 api_post_usuarios:

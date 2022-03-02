@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\UsuariosRepository;
 use Doctrine\ORM\Mapping as ORM;
+// use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+// use Symfony\Component\Validator\Constraints as Assert;
+// use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: UsuariosRepository::class)]
 class Usuarios
@@ -11,6 +14,7 @@ class Usuarios
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -22,6 +26,7 @@ class Usuarios
     #[ORM\Column(type: 'string', length: 255)]
     private $apellidos;
 
+    // #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
     #[ORM\Column(type: 'string', length: 255)]
     private $email;
 
@@ -93,4 +98,13 @@ class Usuarios
 
         return $this;
     }
+
+    // public static function loadValidatorMetadata(ClassMetadata $metadata)
+    // {
+    //     $metadata->addConstraint(new UniqueEntity([
+    //         'fields' => 'email',
+    //     ]));
+
+    //     $metadata->addPropertyConstraint('email', new Assert\Email());
+    // }
 }

@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 
-class ApiController
+class ExternalApiController
 {
 
     private $client;

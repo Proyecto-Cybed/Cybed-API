@@ -3,20 +3,25 @@ controllers:
   type: annotation
 
 kernel:
-    resource: ../src/Kernel.php
-    type: annotation
-    
-getAll:
+  resource: ../src/Kernel.php
+  type: annotation
+
+nvd_get_cves:
   path: /nvd-api
   controller: App\Controller\ExternalApiController::getAll
-  methods: ["GET"]
+  methods: GET
 
-getById:
+nvd_get_cve:
   path: /nvd-api/{id}
   controller: App\Controller\ExternalApiController::getById
-  methods: ["GET"]
+  methods: GET
+
+# api_get_usuario:
+#   path: /api/usuario/?usuario={usuario}
+#   controller: App\Controller\UserController::getCybedUser
+#   methods: GET
 
 api_post_usuarios:
   path: /api/usuarios/
   controller: App\Controller\UserController::postCybedUser
-  methods: ["POST"]
+  methods: POST

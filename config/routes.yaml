@@ -8,10 +8,6 @@ kernel:
 
 api_post_usuarios:
   path: /api/usuarios/
-  controller: App\Controller\ApiController::postCybedUser
+  controller: App\Controller\UserController::postCybedUser
   methods: ["POST"]
 
-api_post_login:
-  path: /api/login/
-  controller: App\Controller\ApiController::postCybedLogin
-  methods: ["POST"]

@@ -23,11 +23,13 @@ class ExternalApiController
             'https://services.nvd.nist.gov/rest/json/cves/1.0/'
         );
 
-        $content = $response->getContent();
+        $content[] = $response->getContent();
 
         $content = $response->toArray();
 
-        return new JsonResponse($content);
+        $result = $content["result"]["CVE_Items"];
+
+        return new JsonResponse($result);
     }
 
     public function getById($id)
@@ -38,9 +40,11 @@ class ExternalApiController
         );
 
         $content = $response->getContent();
-
+       
         $content = $response->toArray();
 
-        return new JsonResponse($content);
+        $result = $content["result"]["CVE_Items"];
+
+        return new JsonResponse($result);
     }
 }

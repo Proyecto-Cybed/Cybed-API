@@ -20,7 +20,7 @@ class ExternalApiController
     {
         $response = $this->client->request(
             'GET',
-            'https://services.nvd.nist.gov/rest/json/cves/1.0/'
+            'https://services.nvd.nist.gov/rest/json/cves/1.0/?resultsPerPage=50',
         );
 
         $content[] = $response->getContent();
@@ -40,7 +40,7 @@ class ExternalApiController
         );
 
         $content = $response->getContent();
-       
+
         $content = $response->toArray();
 
         $result = $content["result"]["CVE_Items"];

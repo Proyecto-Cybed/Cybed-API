@@ -30,3 +30,8 @@ api_post_usuarios:
   path: /api/usuarios/
   controller: App\Controller\UserController::postCybedUser
   methods: POST
+
+api_post_Loginusuarios:
+  path: /api/login/usuarios/
+  controller: App\Controller\UserController::postLoginCybedUser
+  methods: POST

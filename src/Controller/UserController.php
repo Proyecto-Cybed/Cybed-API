@@ -78,4 +78,46 @@ class UserController extends AbstractController
         $result->email = $user->getEmail();
         return new JsonResponse($result, 201);
     }
+
+
+    function postLoginCybedUser(ManagerRegistry $doctrine, Request $request)
+    {
+        $entityManager = $doctrine->getManager();
+
+        $userbd =  $entityManager->getRepository(Usuarios::class)->findOneBy(['email' => $request->request->get("email")]);
+        
+
+        if ($userbd == null) {
+            return new JsonResponse([
+                'error' => 'User'
+            ], 404);
+        }
+
+        $user = new Usuarios();
+        $user->setEmail($request->request->get("email"));
+        
+        
+
+        $result = new \stdClass();
+       
+        if(!empty($user->getEmail()) and password_verify($request->request->get("password"),$userbd->getPassword())){
+            $result->email = $user->getEmail();
+            
+            return new JsonResponse($result, 201);
+        }else{
+            return new JsonResponse([
+                'error' => 'Login'
+            ], 404);
+        }
+        
+
+     
+
+        
+
+        
+
+
+
+    }
 }

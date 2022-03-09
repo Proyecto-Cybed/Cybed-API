@@ -16,10 +16,15 @@ nvd_get_cve:
   controller: App\Controller\ExternalApiController::getById
   methods: GET
 
-# api_get_usuario:
-#   path: /api/usuario/?usuario={usuario}
-#   controller: App\Controller\UserController::getCybedUser
-#   methods: GET
+api_get_usuarios:
+  path: /api/usuarios/
+  controller: App\Controller\UserController::getAllCybedUsers
+  methods: GET 
+
+api_get_usuario:
+  path: /api/usuarios/{usuario}
+  controller: App\Controller\UserController::getCybedUser
+  methods: GET 
 
 api_post_usuarios:
   path: /api/usuarios/

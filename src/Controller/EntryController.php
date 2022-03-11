@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Entrada;
-
+use App\Entity\Usuarios;
 use Doctrine\Persistence\ManagerRegistry;
 
 
@@ -35,14 +35,53 @@ class EntryController extends AbstractController
             $result->titulo = $entrada->getTitulo();
             $result->contenido = $entrada->getContenido();
             $result->fecha = $entrada->getFecha();
-//            $result->usuario = $entrada->getUsuario();
-  //          $result->mensajes = $entrada->getMensajes();
+            $result->usuario = $entrada->getUsuario();
+            $result->mensajes = $entrada->getMensajes();
 
             array_push($results->results, $result);
         }
 
         return new JsonResponse($results, 200);
     }
+
+    function postEntry(ManagerRegistry $doctrine, Request $request)
+    {
+        
+        $entityManager = $doctrine->getManager();
+
+        $entradas =  $entityManager->getRepository(Entrada::class);
+
+        $user = $entityManager->getRepository(Usuarios::class)->find($request->request->get("usuario"));
+        if ($user == null) {
+            return new JsonResponse([
+                'error' => 'User (to post entry) not found'
+            ], 404);
+        }
+
+        $fecha = new \DateTime('now');
+        
+
+        $entradas = new Entrada();
+        $entradas->setUsuario($user);
+        $entradas->setTitulo($request->request->get("titulo"));
+        $entradas->setContenido($request->request->get("contenido"));
+        $entradas->setFecha($fecha->format('Y-m-d-H-i-s'));
+        
+
+        $entityManager->persist($entradas);
+        $entityManager->flush();
+
+        $result = new \stdClass();
+        $result->titulo = $entradas->getTitulo();
+        $result->contenido = $entradas->getContenido();
+        $result->fecha = $entradas->getFecha();
+        $result->usuario = $user->getUsuario();
+       
+     
+        return new JsonResponse($result, 201);
+    }
+
+
 
     /*
     function getCybedUser(ManagerRegistry $doctrine, $usuario)

@@ -5,34 +5,38 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Entrada;
 use App\Entity\Usuarios;
-
 use Doctrine\Persistence\ManagerRegistry;
 
 
-class UserController extends AbstractController
+class EntryController extends AbstractController
 {
 
-    function getAllCybedUsers(ManagerRegistry $doctrine)
+    function getAllEntries(ManagerRegistry $doctrine)
     {
         $entityManager = $doctrine->getManager();
 
-        $users =  $entityManager->getRepository(Usuarios::class)->findAll();
+        $entradas =  $entityManager->getRepository(Entrada::class)->findAll();
 
-        if ($users == null) {
+        if ($entradas == null) {
             return new JsonResponse([
-                'error' => 'Users not found'
+                'error' => 'Entries not found'
             ], 404);
         }
 
         $results  = new \stdClass();
-        $results->count = count($users);
+        $results->count = count($entradas);
         $results->results = array();
 
-        foreach ($users as $user) {
+        foreach ($entradas as $entrada) {
             $result = new \stdClass();
-            $result->usuario = $user->getUsuario();
-            $result->email = $user->getEmail();
+            $result->id = $entrada->getId();
+            $result->titulo = $entrada->getTitulo();
+            $result->contenido = $entrada->getContenido();
+            $result->fecha = $entrada->getFecha();
+            $result->usuario = $entrada->getUsuario();
+            $result->mensajes = $entrada->getMensajes();
 
             array_push($results->results, $result);
         }
@@ -40,6 +44,46 @@ class UserController extends AbstractController
         return new JsonResponse($results, 200);
     }
 
+    function postEntry(ManagerRegistry $doctrine, Request $request)
+    {
+        
+        $entityManager = $doctrine->getManager();
+
+        $entradas =  $entityManager->getRepository(Entrada::class);
+
+        $user = $entityManager->getRepository(Usuarios::class)->find($request->request->get("usuario"));
+        if ($user == null) {
+            return new JsonResponse([
+                'error' => 'User (to post entry) not found'
+            ], 404);
+        }
+
+        $fecha = new \DateTime('now');
+        
+
+        $entradas = new Entrada();
+        $entradas->setUsuario($user);
+        $entradas->setTitulo($request->request->get("titulo"));
+        $entradas->setContenido($request->request->get("contenido"));
+        $entradas->setFecha($fecha->format('Y-m-d-H-i-s'));
+        
+
+        $entityManager->persist($entradas);
+        $entityManager->flush();
+
+        $result = new \stdClass();
+        $result->titulo = $entradas->getTitulo();
+        $result->contenido = $entradas->getContenido();
+        $result->fecha = $entradas->getFecha();
+        $result->usuario = $user->getUsuario();
+       
+     
+        return new JsonResponse($result, 201);
+    }
+
+
+
+    /*
     function getCybedUser(ManagerRegistry $doctrine, $usuario)
     {
         $entityManager = $doctrine->getManager();
@@ -111,4 +155,5 @@ class UserController extends AbstractController
         }
     
     }
+    */
 }

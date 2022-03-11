@@ -38,5 +38,5 @@ api_post_login_usuarios:
 
 api_get_entradas:
   path: /api/entradas/
-  controller: App\Controller\EntryController:getAllEntries
+  controller: App\Controller\EntryController::getAllEntries
   methods: GET

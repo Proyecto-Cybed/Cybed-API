@@ -6,6 +6,12 @@ kernel:
   resource: ../src/Kernel.php
   type: annotation
 
+index:
+  path: /
+  controller: App\Controller\MainController::index
+
+# CVE 
+
 nvd_get_cves:
   path: /nvd-api
   controller: App\Controller\ExternalApiController::getAll
@@ -15,6 +21,8 @@ nvd_get_cve:
   path: /nvd-api/{id}
   controller: App\Controller\ExternalApiController::getById
   methods: GET
+
+# USUARIOS
 
 api_get_usuarios:
   path: /api/usuarios/
@@ -26,15 +34,27 @@ api_get_usuario:
   controller: App\Controller\UserController::getCybedUser
   methods: GET 
 
-api_post_usuarios:
+api_post_usuario:
   path: /api/usuarios/
   controller: App\Controller\UserController::postCybedUser
   methods: POST
 
-api_post_login_usuarios:
-  path: /api/login/usuarios/
-  controller: App\Controller\UserController::postLoginCybedUser
-  methods: POST
+api_delete_usuario:
+  path: /api/usuarios/{usuario}
+  controller: App\Controller\UserController::deleteCybedUser
+  methods: DELETE
+
+api_put_usuario:
+  path: /api/usuarios/{usuario}
+  controller: App\Controller\UserController::putCybedUser
+  methods: PUT
+
+# api_post_login_usuarios:
+#   path: /api/login/usuarios/
+#   controller: App\Controller\UserController::postLoginCybedUser
+#   methods: POST
+
+# ENTRADAS
 
 api_get_entradas:
   path: /api/entradas/

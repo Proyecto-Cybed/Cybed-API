@@ -22,6 +22,11 @@ class MainController extends AbstractController
             array(),
             UrlGeneratorInterface::ABSOLUTE_URL
         );
+        $result['messages'] = $this->generateUrl(
+            'api_get_mensajes',
+            array(),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
         $result['cves'] = $this->generateUrl(
             'nvd_get_cves',
             array(),

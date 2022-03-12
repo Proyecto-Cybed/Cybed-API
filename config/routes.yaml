@@ -80,3 +80,30 @@ api_delete_entrada:
   path: /api/entradas/{id}
   controller: App\Controller\EntryController::deleteEntry
   methods: DELETE
+
+# MENSAJES
+
+api_get_mensajes:
+  path: /api/mensajes/
+  controller: App\Controller\MessageController::getAllMessages
+  methods: GET
+
+api_get_mensaje:
+  path: /api/mensajes/{id}
+  controller: App\Controller\MessageController::getMessage
+  methods: GET
+
+api_post_mensaje:
+  path: /api/mensajes/
+  controller: App\Controller\MessageController::postMessage
+  methods: POST
+
+api_put_mensaje:
+  path: /api/mensajes/{id}
+  controller: App\Controller\MessageController::putMessage
+  methods: PUT
+
+api_delete_mensaje:
+  path: /api/mensajes/{id}
+  controller: App\Controller\MessageController::deleteMessage
+  methods: DELETE

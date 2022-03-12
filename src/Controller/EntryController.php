@@ -36,10 +36,13 @@ class EntryController extends AbstractController
             $result->contenido = $entrada->getContenido();
             $result->fecha = $entrada->getFecha();
             $result->usuario = $entrada->getUsuario()->getUsuario();
-            $result->mensajes = array();
+
+            $result->mensajes = new \stdClass();
+            $result->mensajes->count = count($entrada->getMensajes());
+            $result->mensajes->results = array();
 
             foreach ($entrada->getMensajes() as $mensaje) {
-                $result->mensajes[] = $this->generateUrl('api_get_mensajes', [
+                $result->mensajes->results[] = $this->generateUrl('api_get_mensaje', [
                     'id' => $mensaje->getId(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL);
             }
@@ -67,10 +70,13 @@ class EntryController extends AbstractController
         $result->contenido = $entrada->getContenido();
         $result->fecha = $entrada->getFecha();
         $result->usuario = $entrada->getUsuario()->getUsuario();
-        $result->mensajes = array();
+
+        $result->mensajes = new \stdClass();
+        $result->mensajes->count = count($entrada->getMensajes());
+        $result->mensajes->results = array();
 
         foreach ($entrada->getMensajes() as $mensaje) {
-            $result->mensajes[] = $this->generateUrl('api_get_mensaje', [
+            $result->mensajes->results[] = $this->generateUrl('api_get_mensaje', [
                 'id' => $mensaje->getId(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
         }
@@ -83,7 +89,7 @@ class EntryController extends AbstractController
 
         $entityManager = $doctrine->getManager();
         $user = $entityManager->getRepository(Usuarios::class)->find($request->request->get("usuario"));
-        
+
         if ($user == null) {
             return new JsonResponse([
                 'error' => 'User (to post entry) not found'
@@ -115,20 +121,19 @@ class EntryController extends AbstractController
 
         $entityManager = $doctrine->getManager();
         $entrada =  $entityManager->getRepository(Entrada::class)->findOneBy(['id' => $id]);
-     
+
         if ($entrada == null) {
             return new JsonResponse([
                 'error' => 'Entry not found'
             ], 404);
         }
-    
 
         $fecha = new \DateTime('now');
 
         $entrada->setTitulo($request->request->get("titulo"));
         $entrada->setContenido($request->request->get("contenido"));
         $entrada->setFecha($fecha->format('Y-m-d-H-i-s'));
-        
+
         $entityManager->flush();
 
         $result = new \stdClass();

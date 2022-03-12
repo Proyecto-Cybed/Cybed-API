@@ -35,17 +35,23 @@ class UserController extends AbstractController
             $result->nombre = $user->getNombre();
             $result->apellidos = $user->getApellidos();
             $result->email = $user->getEmail();
-            $result->entradas = array();
-            $result->mensajes = array();
+
+            $result->entradas = new \stdClass();
+            $result->entradas->count = count($user->getEntradas());
+            $result->entradas->results = array();
+
+            $result->mensajes = new \stdClass();
+            $result->mensajes->count = count($user->getMensajes());
+            $result->mensajes->results = array();
 
             foreach ($user->getEntradas() as $entrada) {
-                $result->entradas[] = $this->generateUrl('api_get_entrada', [
+                $result->entradas->results[] = $this->generateUrl('api_get_entrada', [
                     'id' => $entrada->getId(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL);
             }
 
             foreach ($user->getMensajes() as $mensaje) {
-                $result->mensajes[] = $this->generateUrl('api_get_mensaje', [
+                $result->mensajes->results[] = $this->generateUrl('api_get_mensaje', [
                     'id' => $mensaje->getId(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL);
             }
@@ -56,10 +62,13 @@ class UserController extends AbstractController
         return new JsonResponse($results, 200);
     }
 
-    function getCybedUser(ManagerRegistry $doctrine, $usuario)
+    function getCybedUser(ManagerRegistry $doctrine, $id)
     {
         $entityManager = $doctrine->getManager();
-        $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $usuario]);
+        $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['id' => $id]);
+        if ($user == null) {
+            $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $id]); 
+        }
 
         if ($user == null) {
             return new JsonResponse([
@@ -73,17 +82,23 @@ class UserController extends AbstractController
         $result->nombre = $user->getNombre();
         $result->apellidos = $user->getApellidos();
         $result->email = $user->getEmail();
-        $result->entradas = array();
-        $result->mensajes = array();
+
+        $result->entradas = new \stdClass();
+        $result->entradas->count = count($user->getEntradas());
+        $result->entradas->results = array();
+
+        $result->mensajes = new \stdClass();
+        $result->mensajes->count = count($user->getMensajes());
+        $result->mensajes->results = array();
 
         foreach ($user->getEntradas() as $entrada) {
-            $result->entradas[] = $this->generateUrl('api_get_entradas', [
+            $result->entradas->results[] = $this->generateUrl('api_get_entrada', [
                 'id' => $entrada->getId(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
         }
 
         foreach ($user->getMensajes() as $mensaje) {
-            $result->mensajes[] = $this->generateUrl('api_get_mensaje', [
+            $result->mensajes->results[] = $this->generateUrl('api_get_mensaje', [
                 'id' => $mensaje->getId(),
             ], UrlGeneratorInterface::ABSOLUTE_URL);
         }
@@ -160,7 +175,7 @@ class UserController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $user = $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $usuario]);
-        
+
         if ($user == null) {
             return new JsonResponse([
                 'error' => 'User not found'

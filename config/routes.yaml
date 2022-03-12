@@ -61,8 +61,22 @@ api_get_entradas:
   controller: App\Controller\EntryController::getAllEntries
   methods: GET
 
+api_get_entrada:
+  path: /api/entradas/{id}
+  controller: App\Controller\EntryController::getEntry
+  methods: GET
 
 api_post_entrada:
-  path: /api/crear/entrada/
+  path: /api/entradas/
   controller: App\Controller\EntryController::postEntry
   methods: POST
+
+api_put_entrada:
+  path: /api/entradas/{id}
+  controller: App\Controller\EntryController::putEntry
+  methods: PUT
+
+api_delete_entrada:
+  path: /api/entradas/{id}
+  controller: App\Controller\EntryController::deleteEntry
+  methods: DELETE

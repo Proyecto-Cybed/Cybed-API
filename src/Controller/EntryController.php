@@ -40,11 +40,15 @@ class EntryController extends AbstractController
             $result->mensajes = new \stdClass();
             $result->mensajes->count = count($entrada->getMensajes());
             $result->mensajes->results = array();
-
+            
             foreach ($entrada->getMensajes() as $mensaje) {
-                $result->mensajes->results[] = $this->generateUrl('api_get_mensaje', [
-                    'id' => $mensaje->getId(),
-                ], UrlGeneratorInterface::ABSOLUTE_URL);
+                $msgResult = new \stdClass();
+                $msgResult->id = $mensaje->getId();
+                $msgResult->contenido = $mensaje->getContenido();
+                $msgResult->fecha = $mensaje->getFecha();
+                $msgResult->usuario = $mensaje->getUsuario()->getUsuario();
+
+                array_push($result->mensajes->results, $msgResult);
             }
 
             array_push($results->results, $result);
@@ -76,9 +80,13 @@ class EntryController extends AbstractController
         $result->mensajes->results = array();
 
         foreach ($entrada->getMensajes() as $mensaje) {
-            $result->mensajes->results[] = $this->generateUrl('api_get_mensaje', [
-                'id' => $mensaje->getId(),
-            ], UrlGeneratorInterface::ABSOLUTE_URL);
+            $msgResult = new \stdClass();
+            $msgResult->id = $mensaje->getId();
+            $msgResult->contenido = $mensaje->getContenido();
+            $msgResult->fecha = $mensaje->getFecha();
+            $msgResult->usuario = $mensaje->getUsuario()->getUsuario();
+
+            array_push($result->mensajes->results, $msgResult);
         }
 
         return new JsonResponse($result, 200);

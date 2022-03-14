@@ -74,9 +74,13 @@ class MessageController extends AbstractController
     function postMessage(ManagerRegistry $doctrine, Request $request)
     {
         $entityManager = $doctrine->getManager();
-        $user = $entityManager->getRepository(Usuarios::class)->find($request->request->get("usuario"));
+        $user = $entityManager->getRepository(Usuarios::class)->findOneBy(['id' => $request->request->get("usuario")]);
         $entry = $entityManager->getRepository(Entrada::class)->find($request->request->get("entrada"));
 
+        if ($user == null) {
+            $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $request->request->get("usuario")]);
+        }
+        
         if ($user == null) {
             return new JsonResponse([
                 'error' => 'User (to post message) not found'

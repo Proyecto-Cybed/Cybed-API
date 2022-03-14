@@ -49,11 +49,6 @@ api_put_usuario:
   controller: App\Controller\UserController::putCybedUser
   methods: PUT
 
-# api_post_login_usuarios:
-#   path: /api/login/usuarios/
-#   controller: App\Controller\UserController::postLoginCybedUser
-#   methods: POST
-
 # ENTRADAS
 
 api_get_entradas:

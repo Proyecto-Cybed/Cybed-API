@@ -3,13 +3,21 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 class MainController extends AbstractController
 {
+
     function index()
+    {
+
+        return $this->render('swagger.html.twig');
+    }
+
+    function apiIndex()
     {
         $result = array();
         $result['users'] = $this->generateUrl(

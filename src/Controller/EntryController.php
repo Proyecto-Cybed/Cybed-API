@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use App\Entity\Entrada;
 use App\Entity\Usuarios;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,7 +39,7 @@ class EntryController extends AbstractController
             $result->mensajes = new \stdClass();
             $result->mensajes->count = count($entrada->getMensajes());
             $result->mensajes->results = array();
-            
+
             foreach ($entrada->getMensajes() as $mensaje) {
                 $msgResult = new \stdClass();
                 $msgResult->id = $mensaje->getId();
@@ -96,7 +95,10 @@ class EntryController extends AbstractController
     {
 
         $entityManager = $doctrine->getManager();
-        $user = $entityManager->getRepository(Usuarios::class)->find($request->request->get("usuario"));
+        $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['id' => $request->request->get("usuario")]);
+        if ($user == null) {
+            $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $request->request->get("usuario")]);
+        }
 
         if ($user == null) {
             return new JsonResponse([

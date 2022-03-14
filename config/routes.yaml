@@ -30,7 +30,7 @@ api_get_usuarios:
   methods: GET 
 
 api_get_usuario:
-  path: /api/usuarios/{usuario}
+  path: /api/usuarios/{id}
   controller: App\Controller\UserController::getCybedUser
   methods: GET 
 
@@ -40,12 +40,12 @@ api_post_usuario:
   methods: POST
 
 api_delete_usuario:
-  path: /api/usuarios/{usuario}
+  path: /api/usuarios/{id}
   controller: App\Controller\UserController::deleteCybedUser
   methods: DELETE
 
 api_put_usuario:
-  path: /api/usuarios/{usuario}
+  path: /api/usuarios/{id}
   controller: App\Controller\UserController::putCybedUser
   methods: PUT
 

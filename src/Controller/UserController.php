@@ -136,11 +136,11 @@ class UserController extends AbstractController
         return new JsonResponse($result, 201);
     }
 
-    function putCybedUser(ManagerRegistry $doctrine, Request $request, $usuario)
+    function putCybedUser(ManagerRegistry $doctrine, Request $request, $id)
     {
 
         $entityManager = $doctrine->getManager();
-        $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $usuario]);
+        $user =  $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $id]);
         $userToPutByUser = $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $request->request->get("usuario")]);
         $userToPutByUser = $entityManager->getRepository(Usuarios::class)->findOneBy(['email' => $request->request->get("email")]);
 
@@ -171,10 +171,10 @@ class UserController extends AbstractController
         return new JsonResponse($result, 200);
     }
 
-    function deleteCybedUser(ManagerRegistry $doctrine, $usuario)
+    function deleteCybedUser(ManagerRegistry $doctrine, $id)
     {
         $entityManager = $doctrine->getManager();
-        $user = $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $usuario]);
+        $user = $entityManager->getRepository(Usuarios::class)->findOneBy(['usuario' => $id]);
 
         if ($user == null) {
             return new JsonResponse([

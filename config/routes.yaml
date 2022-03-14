@@ -10,6 +10,10 @@ index:
   path: /
   controller: App\Controller\MainController::index
 
+apiIndex:
+  path: /api
+  controller: App\Controller\MainController::apiIndex
+
 # CVE 
 
 nvd_get_cves:

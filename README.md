@@ -32,8 +32,8 @@ Para la realización hemos utilizado las siguientes herramientas:
 <tbody>
   <tr>
   <td rowspan="2"><a href="https://github.com/Proyecto-Cybed/Cybed-Frontend">Frontend</a></td>
-    <td>HTML, CSS</td>
-    <td><a href="https://getbootstrap.com/">Boostrap 5</a></td>
+    <td>PHP, HTML, CSS</td>
+    <td><a href="https://getbootstrap.com/">Boostrap 5</a>, <a href="https://fontawesome.com/">Fonts Awesome</a></td>
   </tr>
   <tr>
     <td>JavaScript</td>
